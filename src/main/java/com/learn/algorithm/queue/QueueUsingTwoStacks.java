@@ -7,10 +7,10 @@ public class QueueUsingTwoStacks {
 	SimpleStack inbox ;
 	SimpleStack outbox ;
 	
-	QueueUsingTwoStacks(){
+	QueueUsingTwoStacks(int size){
 		
-		inbox = new SimpleStack(50);
-		outbox = new SimpleStack(50);
+		inbox = new SimpleStack(size);
+		outbox = new SimpleStack(size);
 		
 	}
 	
@@ -18,18 +18,67 @@ public class QueueUsingTwoStacks {
 	// Utility function to remove front element from the queue
 	public synchronized int dequeue()
 	{
-        //TODO
-		int dequeueValue = 0;
-
-		return dequeueValue;
+		
+		if(outbox.isEmpty()) {
+			System.exit(-1);
+		}
+		return  outbox.pop();
+		
+		
 	}
 
-	// Utility function to add an item to the queue
+	// enqueue
 	public synchronized void enqueue(int item)
 	{
-		//TODO
+
+		if(outbox.isEmpty()) {
+			outbox.push(item);
+		}
+		
+		else {
+			
+			while(!outbox.isEmpty())
+			{
+				inbox.push(outbox.pop());
+			}
+			
+			outbox.push(item);
+			
+			while(!inbox.isEmpty())
+			{
+				
+				outbox.push(inbox.pop());
+				
+			}
+			
+			
+			
+			
+		}
+		
+		
+	}
+	
+	public int size() {
+		return outbox.size();
 	}
 	
 	
+	public static void main(String[] args)
+	{
+		QueueUsingTwoStacks newQueue = new QueueUsingTwoStacks(50);
+		newQueue.enqueue(10);
+		newQueue.enqueue(5);
+		newQueue.enqueue(20);
+		newQueue.enqueue(50);
+		
+		while(newQueue.size() >0)
+		{
+			//System.out.println(newQueue.size());
+		   System.out.println(newQueue.dequeue());
+		
+		}
+		
+	}
 	
 }

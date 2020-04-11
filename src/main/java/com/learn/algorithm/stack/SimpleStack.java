@@ -4,21 +4,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class SimpleStack {
 	   private int maxSize;
-	   private long[] stackArray;
+	   private int[] stackArray;
 	   private AtomicInteger top;
 	   
 	   public SimpleStack(int maxSize) {
-	      maxSize = maxSize;
-	      stackArray = new long[maxSize];
+	      this.maxSize = maxSize;
+	      stackArray = new int[maxSize];
 	      top = new AtomicInteger(-1);
 	   }
-	   public void push(long j) {
+	   public void push(int j) {
 	      stackArray[top.incrementAndGet()] = j;
 	   }
-	   public long pop() {
+	   public int pop() {
 	      return stackArray[top.getAndDecrement()];
 	   }
-	   public long peek() {
+	   public int peek() {
 	      return stackArray[top.get()];
 	   }
 	   public boolean isEmpty() {
@@ -26,6 +26,9 @@ public class SimpleStack {
 	   }
 	   public boolean isFull() {
 	      return (top.get()== ( maxSize - 1));
+	   }
+	   public int size() {
+		   return top.get()+1;
 	   }
 	   public static void main(String[] args) {
 		   SimpleStack theStack = new SimpleStack(10); 
